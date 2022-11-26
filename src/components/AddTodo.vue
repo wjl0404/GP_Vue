@@ -41,8 +41,14 @@ export default {
   name: "add-todo",
   data() {
     return {
-      tutorial: {
-        id: null,
+      // tutorial: {
+      //   id: null,
+      //   title: "",
+      //   description: "",
+      //   done: false
+      // },
+      todo: {
+        // id: null,
         title: "",
         description: "",
         done: false
@@ -51,12 +57,13 @@ export default {
     };
   },
   methods: {
-    savetodo() {
+    saveTodo() {
       var data = {
         title: this.todo.title,
-        description: this.todo.description
+        description: this.todo.description,
+        status:this.todo.done
       };
-
+      alert(data)
       TodoDataService.create(data)
         .then(response => {
           this.todo.id = response.data.id;
@@ -66,11 +73,13 @@ export default {
         .catch(e => {
           console.log(e);
         });
+
+      // alert(123)
     },
     
     newTodo() {
       this.submitted = false;
-      this.tutorial = {};
+      this.todo = {};
     }
   }
 };

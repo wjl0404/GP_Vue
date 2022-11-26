@@ -2,10 +2,16 @@
   <div class="list row">
     <div class="col-md-8">
       <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="搜索待办清单"
-          v-model="title"/>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="搜索待办清单"
+          v-model="title"
+        />
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button"
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
             @click="searchTitle"
           >
             Search
@@ -16,7 +22,8 @@
     <div class="col-md-6">
       <h4>待办清单</h4>
       <ul class="list-group">
-        <li class="list-group-item"
+        <li
+          class="list-group-item"
           :class="{ active: index == currentIndex }"
           v-for="(todo, index) in todos"
           :key="index"
@@ -27,7 +34,7 @@
       </ul>
 
       <button class="m-3 btn btn-sm btn-danger" @click="removeAllTodos">
-       删除所有清单
+        删除所有清单
       </button>
     </div>
     <div class="col-md-6">
@@ -40,10 +47,16 @@
           <label><strong>详情:</strong></label> {{ currentTodo.description }}
         </div>
         <div>
-          <label><strong>状态:</strong></label> {{ currentTodo.done ? "done" : "undone" }}
+          <label><strong>状态:</strong></label>
+          {{ currentTodo.done ? "done" : "undone" }}
         </div>
 
-        <router-link :to="'/todos/' + currentTodo.id" class="badge badge-warning">编辑</router-link>
+        <router-link :to="'/todo/' + currentTodo._id" class="badge badge-warning">编辑</router-link>
+        <!-- <router-link
+          :to="{
+            path: '/todo',
+          }"
+        ></router-link> -->
       </div>
       <div v-else>
         <br />
@@ -63,17 +76,17 @@ export default {
       todos: [],
       currentTodo: null,
       currentIndex: -1,
-      title: ""
+      title: "",
     };
   },
   methods: {
     retrieveTodos() {
       TodoDataService.getAll()
-        .then(response => {
+        .then((response) => {
           this.todos = response.data;
           console.log(response.data);
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     },
@@ -91,30 +104,30 @@ export default {
 
     removeAllTodos() {
       TodoDataService.deleteAll()
-        .then(response => {
+        .then((response) => {
           console.log(response.data);
           this.refreshList();
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     },
-    
+
     searchTitle() {
       TodoDataService.findByTitle(this.title)
-        .then(response => {
+        .then((response) => {
           this.todos = response.data;
           this.setActiveTodo(null);
           console.log(response.data);
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
-    }
+    },
   },
   mounted() {
     this.retrieveTodos();
-  }
+  },
 };
 </script>
 

@@ -66,6 +66,7 @@ export default {
   },
   methods: {
     getTodo(id) {
+      console.log(id);
       TodoDataService.get(id)
         .then(response => {
           this.currentTodo = response.data;
@@ -78,13 +79,10 @@ export default {
 
     updatedone(status) {
       var data = {
-        id: this.currentTodo.id,
-        title: this.currentTodo.title,
-        description: this.currentTodo.description,
-        done: status
+        // _id: this.currentTodo._id,
+        status: status
       };
-
-      TodoDataService.update(this.currentTodo.id, data)
+      TodoDataService.update(this.currentTodo._id, data)
         .then(response => {
           console.log(response.data);
           this.currentTodo.done = status;
@@ -96,7 +94,13 @@ export default {
     },
 
     updateTodo() {
-      TodoDataService.update(this.currentTodo.id, this.currentTodo)
+      var data = {
+        // _id: this.currentTodo._id,
+        title: this.currentTodo.title,
+        description: this.currentTodo.description,
+        status: status
+      };
+      TodoDataService.update(this.currentTodo._id, data)
         .then(response => {
           console.log(response.data);
           this.message = '信息更新成功';
@@ -107,10 +111,10 @@ export default {
     },
 
     deleteTodo() {
-      TodoDataService.delete(this.currentTodo.id)
+      TodoDataService.delete(this.currentTodo._id)
         .then(response => {
           console.log(response.data);
-          this.$router.push({ name: "todos" });
+          this.$router.push({ path:'/todo' });
         })
         .catch(e => {
           console.log(e);
@@ -120,6 +124,7 @@ export default {
   mounted() {
     this.message = '';
     this.getTodo(this.$route.params.id);
+    console.log(this.$route.params.id);
   }
 };
 </script>
