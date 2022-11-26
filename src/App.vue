@@ -2,7 +2,7 @@
   <div id="app">
     <nav class="navbar navbar-expand navbar-dark bg-dark">
       <router-link to="/" class="navbar-brand"
-        >卡拉云_kalacloud.com</router-link
+        >TodoList</router-link
       >
       <div class="navbar-nav mr-auto">
         <li class="nav-item">

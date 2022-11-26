@@ -29,7 +29,7 @@
 
     <div v-else>
       <h4>提交成功</h4>
-      <button class="btn btn-success" @click="newtodo">添加</button>
+      <button class="btn btn-success" @click="newTodo">添加</button>
     </div>
   </div>
 </template>
@@ -51,9 +51,9 @@ export default {
         // id: null,
         title: "",
         description: "",
-        done: false
+        done: false,
       },
-      submitted: false
+      submitted: false,
     };
   },
   methods: {
@@ -61,27 +61,29 @@ export default {
       var data = {
         title: this.todo.title,
         description: this.todo.description,
-        status:this.todo.done
+        status: this.todo.done,
       };
-      alert(data)
+      alert(data);
       TodoDataService.create(data)
-        .then(response => {
+        .then((response) => {
           this.todo.id = response.data.id;
           console.log(response.data);
           this.submitted = true;
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
 
       // alert(123)
     },
-    
+
     newTodo() {
-      this.submitted = false;
-      this.todo = {};
-    }
-  }
+      this.$nextTick(() => {
+        this.submitted = false;
+        this.todo = {};
+      });
+    },
+  },
 };
 </script>
 
